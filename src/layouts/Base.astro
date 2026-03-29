@@ -1,0 +1,333 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  ogTitle?: string;
+}
+
+const { title, description, ogTitle } = Astro.props;
+const siteTitle = 'Hassan Mamdani';
+const fullTitle = title === siteTitle ? siteTitle : `${title} — ${siteTitle}`;
+const metaDescription = description ?? 'Writing about being a generalist — breadth without obvious depth, and why that might not be the liability it feels like.';
+const metaOgTitle = ogTitle ?? fullTitle;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={metaDescription} />
+    <meta property="og:title" content={metaOgTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <link rel="canonical" href={canonicalURL} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{fullTitle}</title>
+    <style>
+      /* ─── Reset ─── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      /* ─── Tokens ─── */
+      :root {
+        --bg:       #fafaf8;
+        --surface:  #f4f3f0;
+        --border:   #e5e3de;
+        --text:     #1a1917;
+        --muted:    #6b6860;
+        --accent:   #2a5c45;
+        --link:     #2a5c45;
+        --link-vis: #1d4130;
+
+        --font-sans: 'Georgia', serif;
+        --font-mono: 'Menlo', 'Consolas', monospace;
+
+        --measure: 65ch;
+        --space-xs: 0.5rem;
+        --space-s:  1rem;
+        --space-m:  1.75rem;
+        --space-l:  3rem;
+        --space-xl: 5rem;
+      }
+
+      /* ─── Base ─── */
+      html {
+        font-size: 18px;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      body {
+        font-family: var(--font-sans);
+        line-height: 1.7;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ─── Layout ─── */
+      .wrapper {
+        width: 100%;
+        max-width: calc(var(--measure) + 4rem);
+        margin: 0 auto;
+        padding: 0 var(--space-m);
+      }
+
+      /* ─── Header / Nav ─── */
+      header {
+        border-bottom: 1px solid var(--border);
+        padding: var(--space-m) 0;
+      }
+
+      .header-inner {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--space-m);
+        flex-wrap: wrap;
+      }
+
+      .site-name {
+        font-size: 1rem;
+        font-weight: normal;
+        letter-spacing: 0.02em;
+      }
+
+      .site-name a {
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      nav {
+        display: flex;
+        gap: var(--space-m);
+      }
+
+      nav a {
+        font-size: 0.9rem;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 0.02em;
+      }
+
+      nav a:hover,
+      nav a[aria-current="page"] {
+        color: var(--text);
+      }
+
+      /* ─── Main ─── */
+      main {
+        flex: 1;
+        padding: var(--space-xl) 0;
+      }
+
+      /* ─── Footer ─── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: var(--space-m) 0;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+
+      /* ─── Typography ─── */
+      h1, h2, h3 {
+        line-height: 1.25;
+        font-weight: normal;
+      }
+
+      h1 { font-size: 1.9rem; }
+      h2 { font-size: 1.35rem; margin-top: var(--space-l); margin-bottom: var(--space-s); }
+      h3 { font-size: 1.1rem; }
+
+      p { margin-bottom: var(--space-s); max-width: var(--measure); }
+      p:last-child { margin-bottom: 0; }
+
+      a { color: var(--link); }
+      a:visited { color: var(--link-vis); }
+
+      /* ─── Prose (blog post body) ─── */
+      .prose {
+        max-width: var(--measure);
+      }
+
+      .prose p { margin-bottom: var(--space-s); }
+      .prose h2 { margin-top: var(--space-l); }
+      .prose h3 { margin-top: var(--space-m); }
+
+      .prose ul, .prose ol {
+        margin: var(--space-s) 0 var(--space-s) 1.5rem;
+      }
+
+      .prose li { margin-bottom: var(--space-xs); }
+
+      .prose blockquote {
+        border-left: 3px solid var(--accent);
+        padding-left: var(--space-m);
+        color: var(--muted);
+        margin: var(--space-m) 0;
+      }
+
+      .prose code {
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+        background: var(--surface);
+        padding: 0.1em 0.3em;
+        border-radius: 3px;
+      }
+
+      .prose pre {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: var(--space-m);
+        border-radius: 4px;
+        overflow-x: auto;
+        margin: var(--space-m) 0;
+      }
+
+      .prose pre code {
+        background: none;
+        padding: 0;
+      }
+
+      /* ─── Post list ─── */
+      .post-list {
+        list-style: none;
+        margin-top: var(--space-l);
+      }
+
+      .post-list li {
+        display: flex;
+        gap: var(--space-m);
+        padding: var(--space-m) 0;
+        border-bottom: 1px solid var(--border);
+        align-items: baseline;
+        flex-wrap: wrap;
+      }
+
+      .post-list li:first-child { border-top: 1px solid var(--border); }
+
+      .post-date {
+        font-size: 0.85rem;
+        color: var(--muted);
+        white-space: nowrap;
+        min-width: 6.5rem;
+        flex-shrink: 0;
+        padding-top: 0.15rem;
+      }
+
+      .post-title {
+        font-size: 1rem;
+        text-decoration: none;
+        color: var(--text);
+      }
+
+      .post-title:hover { color: var(--accent); }
+
+      .post-desc {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-top: var(--space-xs);
+      }
+
+      /* ─── Page header ─── */
+      .page-header {
+        margin-bottom: var(--space-l);
+      }
+
+      .page-header .tagline {
+        font-size: 1rem;
+        color: var(--muted);
+        margin-top: var(--space-xs);
+      }
+
+      /* ─── Article header ─── */
+      .article-header {
+        margin-bottom: var(--space-l);
+        border-bottom: 1px solid var(--border);
+        padding-bottom: var(--space-m);
+      }
+
+      .article-header time {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-top: var(--space-xs);
+      }
+
+      /* ─── Back link ─── */
+      .back-link {
+        display: inline-block;
+        font-size: 0.85rem;
+        color: var(--muted);
+        text-decoration: none;
+        margin-bottom: var(--space-l);
+      }
+
+      .back-link:hover { color: var(--text); }
+
+      /* ─── Home intro ─── */
+      .home-intro {
+        max-width: var(--measure);
+        margin-bottom: var(--space-xl);
+      }
+
+      .home-intro h1 {
+        margin-bottom: var(--space-xs);
+      }
+
+      .home-intro .tagline {
+        font-size: 1rem;
+        color: var(--muted);
+        margin-bottom: var(--space-m);
+      }
+
+      .home-intro p {
+        color: var(--text);
+      }
+
+      /* ─── Section label ─── */
+      .section-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: var(--space-s);
+      }
+
+      /* ─── Responsive ─── */
+      @media (max-width: 600px) {
+        html { font-size: 16px; }
+        .post-list li { flex-direction: column; gap: var(--space-xs); }
+        .post-date { min-width: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="wrapper">
+        <div class="header-inner">
+          <p class="site-name"><a href="/">Hassan Mamdani</a></p>
+          <nav>
+            <a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>Home</a>
+            <a href="/blog" aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}>Writing</a>
+            <a href="/about" aria-current={Astro.url.pathname === '/about' ? 'page' : undefined}>About</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="wrapper">
+        <slot />
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrapper">
+        <p>Hassan Mamdani · Cambridge, UK</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+---
+
+<Base title="Hassan Mamdani" description="Writing about being a generalist — breadth without obvious depth, and why that might not be the liability it feels like.">
+  <div class="home-intro">
+    <h1>Hassan Mamdani</h1>
+    <p class="tagline">Thinking out loud</p>
+    <p>
+      Based in Cambridge. Career in drug discovery, IT systems, and operations.
+      Currently COO/CFO of <a href="https://www.openingworlds.co.uk">Opening Worlds Ltd</a>.
+    </p>
+    <p>
+      I write about being a generalist — what it means to move across fields without
+      settling in any of them, and whether that's a problem worth solving.
+    </p>
+  </div>
+
+  {posts.length > 0 && (
+    <section>
+      <p class="section-label">Recent writing</p>
+      <ul class="post-list">
+        {posts.map(post => (
+          <li>
+            <span class="post-date">{formatDate(post.data.pubDate)}</span>
+            <div>
+              <a class="post-title" href={`/blog/${post.id}`}>{post.data.title}</a>
+              {post.data.description && (
+                <p class="post-desc">{post.data.description}</p>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Base>
