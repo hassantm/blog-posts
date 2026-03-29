@@ -38,7 +38,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         --bg:       #fdf8f2;
         --surface:  #f5ede0;
         --border:   #e8d9c8;
-        --text:     #2c2420;
+        --text:     #4d4d4d;
         --muted:    #7a6a5e;
         --accent:   #8b3a2a;
         --link:     #8b3a2a;
@@ -165,6 +165,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
 
       .prose p { margin-bottom: var(--space-s); }
+      .prose h1, .prose h2, .prose h3 {
+        font-family: var(--font-head);
+      }
       .prose h2 { margin-top: var(--space-l); }
       .prose h3 { margin-top: var(--space-m); }
 
