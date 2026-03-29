@@ -29,7 +29,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
     <title>{fullTitle}</title>
-    <style>
+    <style is:global>
       /* ─── Reset ─── */
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
