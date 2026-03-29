@@ -25,6 +25,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:url" content={canonicalURL} />
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
     <title>{fullTitle}</title>
     <style>
       /* ─── Reset ─── */
@@ -32,16 +35,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       /* ─── Tokens ─── */
       :root {
-        --bg:       #fafaf8;
-        --surface:  #f4f3f0;
-        --border:   #e5e3de;
-        --text:     #1a1917;
-        --muted:    #6b6860;
-        --accent:   #2a5c45;
-        --link:     #2a5c45;
-        --link-vis: #1d4130;
+        --bg:       #fdf8f2;
+        --surface:  #f5ede0;
+        --border:   #e8d9c8;
+        --text:     #2c2420;
+        --muted:    #7a6a5e;
+        --accent:   #8b3a2a;
+        --link:     #8b3a2a;
+        --link-vis: #6a2d20;
 
-        --font-sans: 'Georgia', serif;
+        --font-sans: 'Crimson Pro', Georgia, serif;
+        --font-head: 'Outfit', system-ui, sans-serif;
         --font-mono: 'Menlo', 'Consolas', monospace;
 
         --measure: 65ch;
@@ -54,14 +58,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       /* ─── Base ─── */
       html {
-        font-size: 18px;
+        font-size: 19px;
         background: var(--bg);
         color: var(--text);
       }
 
       body {
         font-family: var(--font-sans);
-        line-height: 1.7;
+        line-height: 1.75;
         min-height: 100dvh;
         display: flex;
         flex-direction: column;
@@ -77,6 +81,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       /* ─── Header / Nav ─── */
       header {
+        background: var(--surface);
         border-bottom: 1px solid var(--border);
         padding: var(--space-m) 0;
       }
@@ -90,8 +95,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
 
       .site-name {
+        font-family: var(--font-head);
         font-size: 1rem;
-        font-weight: normal;
+        font-weight: 500;
         letter-spacing: 0.02em;
       }
 
@@ -106,15 +112,18 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
 
       nav a {
-        font-size: 0.9rem;
+        font-family: var(--font-head);
+        font-size: 0.85rem;
+        font-weight: 400;
         color: var(--muted);
         text-decoration: none;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
       }
 
       nav a:hover,
       nav a[aria-current="page"] {
-        color: var(--text);
+        color: var(--accent);
       }
 
       /* ─── Main ─── */
@@ -125,21 +134,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       /* ─── Footer ─── */
       footer {
+        background: var(--surface);
         border-top: 1px solid var(--border);
         padding: var(--space-m) 0;
         font-size: 0.85rem;
+        font-family: var(--font-head);
         color: var(--muted);
       }
 
       /* ─── Typography ─── */
       h1, h2, h3 {
+        font-family: var(--font-head);
         line-height: 1.25;
-        font-weight: normal;
+        font-weight: 400;
       }
 
-      h1 { font-size: 1.9rem; }
-      h2 { font-size: 1.35rem; margin-top: var(--space-l); margin-bottom: var(--space-s); }
-      h3 { font-size: 1.1rem; }
+      h1 { font-size: 2rem; font-weight: 300; }
+      h2 { font-size: 1.3rem; font-weight: 500; margin-top: var(--space-l); margin-bottom: var(--space-s); }
+      h3 { font-size: 1.1rem; font-weight: 500; }
 
       p { margin-bottom: var(--space-s); max-width: var(--measure); }
       p:last-child { margin-bottom: 0; }
